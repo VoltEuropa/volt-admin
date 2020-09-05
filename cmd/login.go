@@ -45,8 +45,16 @@ var loginCmd = &cobra.Command{
 		}
 		values := map[string]string{"code": authCode}
 
-		jsonValue, _ := json.Marshal(values)
+		jsonValue, err := json.Marshal(values)
+		if err != nil {
+			return err
+		}
+
 		resp, err = http.Post(internal.ServerURL()+"/login", "application/json", bytes.NewBuffer(jsonValue))
+		if err != nil {
+			return err
+		}
+
 		body, err = ioutil.ReadAll(resp.Body)
 		if err != nil {
 			return err
