@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/spf13/cobra"
 )
 
@@ -15,10 +17,8 @@ var rootCmd = &cobra.Command{
 
 // Execute runs the CLI.
 func Execute() {
-	rootCmd.Execute()
-}
-
-func init() {
-	// rootCmd.PersistentFlags().String("user", "", "username)
-	// rootCmd.PersistentFlags().String("password", "", "password")
+	err := rootCmd.Execute()
+	if err != nil {
+		os.Exit(1)
+	}
 }

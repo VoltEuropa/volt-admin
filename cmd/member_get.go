@@ -37,7 +37,7 @@ var memberGetCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Println(string(body))
+		fmt.Print(string(body))
 
 		return nil
 	},
