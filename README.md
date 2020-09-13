@@ -33,7 +33,7 @@ If you are, simply login and start using the command line interface:
 ```
 ➜  volt-admin login
 [Authentication process, only happens once]
-➜  volt-admin member find 100651
+➜  volt-admin member get 100651
 [Will return info about the user with id 100651]
 ```
 
