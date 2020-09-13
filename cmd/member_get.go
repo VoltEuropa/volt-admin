@@ -10,12 +10,12 @@ import (
 )
 
 func init() {
-	memberCmd.AddCommand(memberFindCmd)
+	memberCmd.AddCommand(memberGetCmd)
 }
 
-var memberFindCmd = &cobra.Command{
-	Use:   "find <member-id>",
-	Short: "Find members",
+var memberGetCmd = &cobra.Command{
+	Use:   "get <member-id>",
+	Short: "Get members",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client := http.Client{}
@@ -23,15 +23,21 @@ var memberFindCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+
 		resp, err := client.Do(req)
 		if err != nil {
 			return err
 		}
+		if resp.StatusCode == http.StatusNotFound {
+			return fmt.Errorf("member with id '%s' not found", args[0])
+		}
+
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
 			return err
 		}
-		fmt.Print(string(body))
+
+		fmt.Println(string(body))
 
 		return nil
 	},

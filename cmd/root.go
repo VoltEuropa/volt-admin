@@ -1,15 +1,13 @@
 package cmd
 
 import (
-	"fmt"
-	"os"
-
 	"github.com/spf13/cobra"
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "volt-admin",
-	Short: "Help you manage the volt.team database",
+	Use:          "volt-admin",
+	Short:        "Help you manage the volt.team database",
+	SilenceUsage: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		return cmd.Help()
 	},
@@ -17,10 +15,7 @@ var rootCmd = &cobra.Command{
 
 // Execute runs the CLI.
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+	rootCmd.Execute()
 }
 
 func init() {

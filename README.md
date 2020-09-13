@@ -27,8 +27,8 @@ Ready-to-use binaries are available at https://github.com/VoltEuropa/volt-admin/
 Download the program for your operating system and add it to your path in order to
 be able to run `volt-admin` from your shell.
 
-You need to be an approved administrator to use this program. If you are,
-simply login and start using the command line interface:
+**You need to be an approved administrator to use this program**.
+If you are, simply login and start using the command line interface:
 
 ```
 ➜  volt-admin login

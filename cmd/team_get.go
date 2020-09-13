@@ -10,17 +10,16 @@ import (
 )
 
 func init() {
-	teamCmd.AddCommand(teamDeleteCmd)
+	teamCmd.AddCommand(teamGetCmd)
 }
 
-var teamDeleteCmd = &cobra.Command{
-	Use:   "delete <team-id>",
-	Short: "Delete teams",
-	Long:  "Archive a team and delete it from the teams database",
+var teamGetCmd = &cobra.Command{
+	Use:   "get <team-id>",
+	Short: "Get teams",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		client := http.Client{}
-		req, err := internal.Request("DELETE", "/teams/"+args[0], nil)
+		req, err := internal.Request("GET", "/teams/"+args[0], nil)
 		if err != nil {
 			return err
 		}
@@ -38,7 +37,7 @@ var teamDeleteCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Println(string(body))
+		fmt.Print(string(body))
 
 		return nil
 	},

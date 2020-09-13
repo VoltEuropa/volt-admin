@@ -3,9 +3,9 @@ package cmd
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 
@@ -60,6 +60,10 @@ var loginCmd = &cobra.Command{
 			return err
 		}
 		fmt.Println(string(body))
+		if resp.StatusCode != 200 {
+			return errors.New("Error when posting the token")
+		}
+
 		tokenPath, err := internal.TokenPath()
 		if err != nil {
 			return err
@@ -67,13 +71,13 @@ var loginCmd = &cobra.Command{
 
 		f, err := os.OpenFile(tokenPath, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0600)
 		if err != nil {
-			log.Fatalf("Unable to cache oauth token: %v", err)
+			return fmt.Errorf("Unable to cache oauth token: %v", err)
 		}
 		defer f.Close()
 
 		_, err = f.WriteString(string(body))
 		if err != nil {
-			log.Fatalf("Unable to save token: %v", err)
+			return fmt.Errorf("Unable to save token: %v", err)
 		}
 		fmt.Println("You token has been saved in " + tokenPath)
 
